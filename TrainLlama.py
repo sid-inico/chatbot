@@ -2,6 +2,10 @@ import json
 import ollama
 import chromadb as db
 from sentence_transformers import SentenceTransformer
+import logging
+
+# Silencia los logs de ChromaDB (solo mostrará ERROR o superior)
+logging.getLogger('chromadb').setLevel(logging.ERROR)
 
 # Cargar el JSON
 with open("json/train.json", "r") as f:
@@ -11,7 +15,7 @@ with open("json/train.json", "r") as f:
 pairs = [(item["query"], item["response"]) for item in data]
 
 # Inicializar ChromaDB
-client = db.PersistentClient("./prueba")
+client = db.PersistentClient("./prueba", )
 collection = client.get_or_create_collection(name="prueba")
 
 # Cargar un modelo de embeddings
@@ -51,10 +55,13 @@ def chatbot(query):
 # Probar el chatbot
 print("Nico: ¡Hola! Soy tu asistente. Escribe 'salir' para terminar.")
 
-while True:
+user_input = "" 
+
+while (user_input.lower() != "salir") and (user_input.lower() != "adios"):
     user_input = input("Tú: ")
     if user_input.lower() in ["salir", "adios"]:
-        print("Nico: ¡Hasta luego!")
         break
     response = chatbot(user_input)
     print(f"Nico: {response}")
+
+print("Nico: ¡Hasta luego!")
