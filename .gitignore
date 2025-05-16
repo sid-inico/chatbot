@@ -1,4 +1,5 @@
 .env/
 prueba/
 logs/
+__pycache__/
 .DS_Store
