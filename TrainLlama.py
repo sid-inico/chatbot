@@ -12,7 +12,7 @@ from config import EMBEDDING_THRESHOLD
 logging.getLogger('chromadb').setLevel(logging.ERROR)
 
 # Cargar el JSON
-with open("json/train.json", "r") as f:
+with open("json/train.jsonl", "r") as f:
     data = json.load(f)
 
 # Extraer pares
